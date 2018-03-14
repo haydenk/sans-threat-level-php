@@ -20,12 +20,12 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "haydenk\\": "src/main/php"
+      "haydenk\\": "lib/main/php/haydenk/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "haydenk\\": "src/test/php"
+      "haydenk\\": "lib/test/php/haydenk/"
     }
   },
   "scripts": {

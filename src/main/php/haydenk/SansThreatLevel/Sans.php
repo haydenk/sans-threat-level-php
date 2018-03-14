@@ -1,6 +1,6 @@
 <?php
 
-namespace haydenk\SansThreatLevel;
+namespace SansThreatLevel;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
