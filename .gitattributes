@@ -9,5 +9,5 @@
 /.scrutinizer.yml   export-ignore
 /.styleci.yml       export-ignore
 /.editorconfig      export-ignore
-/lib/tests          export-ignore
+/lib/test           export-ignore
 /docs               export-ignore
