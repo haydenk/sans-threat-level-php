@@ -1,9 +1,8 @@
 <?php
 
-namespace haydenk\haydenk\SansThreatLevel;
+namespace haydenk\SansThreatLevel;
 
 use GuzzleHttp\ClientInterface;
-use haydenk\SansThreatLevel\SansClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
 

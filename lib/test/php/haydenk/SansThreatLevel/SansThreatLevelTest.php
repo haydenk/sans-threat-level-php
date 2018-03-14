@@ -1,23 +1,21 @@
 <?php
 
-namespace haydenk\haydenk\SansThreatLevel;
+namespace haydenk\SansThreatLevel;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use haydenk\SansThreatLevel\SansClient;
-use haydenk\SansThreatLevel\SansThreatLevel;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class SansThreatLevelTest extends TestCase
 {
     /**
-     * @var SansThreatLevel
+     * @var Sans
      */
-    private $sansThreatLevel;
+    private $sans;
 
     /**
      * @var MockObject|ClientInterface
@@ -26,7 +24,7 @@ class SansThreatLevelTest extends TestCase
 
     protected function setUp()
     {
-        $this->sansThreatLevel = new SansThreatLevel();
+        $this->sans = new Sans();
 
         $this->mockClient = $this->getMockBuilder(SansClient::class)->getMock();
         $this->mockClient
@@ -39,10 +37,10 @@ class SansThreatLevelTest extends TestCase
 
     public function testSetClient()
     {
-        $this->sansThreatLevel->setClient(new SansClient());
+        $this->sans->setClient(new SansClient());
 
-        $this->assertInstanceOf(SansClient::class, $this->sansThreatLevel->getClient());
-        $this->assertInstanceOf(ClientInterface::class, $this->sansThreatLevel->getClient());
+        $this->assertInstanceOf(SansClient::class, $this->sans->getClient());
+        $this->assertInstanceOf(ClientInterface::class, $this->sans->getClient());
     }
 
     /**
@@ -50,11 +48,11 @@ class SansThreatLevelTest extends TestCase
      */
     public function testGetLastModified()
     {
-        $this->sansThreatLevel->setClient($this->mockClient);
-        $this->sansThreatLevel->fetch();
+        $this->sans->setClient($this->mockClient);
+        $this->sans->fetch();
 
-        $this->assertInstanceOf(\DateTimeInterface::class, $this->sansThreatLevel->getLastModified());
-        $this->assertEquals('2018-03-14', $this->sansThreatLevel->getLastModified()->format('Y-m-d'));
+        $this->assertInstanceOf(\DateTimeInterface::class, $this->sans->getLastModified());
+        $this->assertEquals('2018-03-14', $this->sans->getLastModified()->format('Y-m-d'));
     }
 
     /**
@@ -62,11 +60,11 @@ class SansThreatLevelTest extends TestCase
      */
     public function testGetThreatLevel()
     {
-        $this->sansThreatLevel->setClient($this->mockClient);
-        $this->sansThreatLevel->fetch();
+        $this->sans->setClient($this->mockClient);
+        $this->sans->fetch();
 
-        $this->assertInternalType('string', $this->sansThreatLevel->getThreatLevel());
-        $this->assertEquals('green', $this->sansThreatLevel->getThreatLevel());
+        $this->assertInternalType('string', $this->sans->getThreatLevel());
+        $this->assertEquals('green', $this->sans->getThreatLevel());
     }
 
     /**
@@ -74,16 +72,16 @@ class SansThreatLevelTest extends TestCase
      */
     public function testGetHash()
     {
-        $this->sansThreatLevel->setClient($this->mockClient);
-        $this->sansThreatLevel->fetch();
+        $this->sans->setClient($this->mockClient);
+        $this->sans->fetch();
 
         $expectedHash = hash('sha256', serialize([
             'last_modified' => new \DateTimeImmutable('Wed, 14 Mar 2018 01:30:13 GMT'),
             'threat_level' => 'green',
         ]));
 
-        $this->assertInternalType('string', $this->sansThreatLevel->getHash());
-        $this->assertEquals($expectedHash, $this->sansThreatLevel->getHash());
+        $this->assertInternalType('string', $this->sans->getHash());
+        $this->assertEquals($expectedHash, $this->sans->getHash());
     }
 
     /**
@@ -104,10 +102,10 @@ class SansThreatLevelTest extends TestCase
         }
 
         try {
-            $this->sansThreatLevel->setClient($this->mockClient);
-            $return = $this->sansThreatLevel->fetch();
+            $this->sans->setClient($this->mockClient);
+            $return = $this->sans->fetch();
 
-            $this->assertInstanceOf(SansThreatLevel::class, $return);
+            $this->assertInstanceOf(Sans::class, $return);
         } catch (GuzzleException $e) {
             $this->assertInstanceOf(ClientException::class, $e);
             $this->assertEquals('404 Not Found', $e->getMessage());

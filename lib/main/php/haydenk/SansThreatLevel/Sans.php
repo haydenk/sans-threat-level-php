@@ -1,11 +1,11 @@
 <?php
 
-namespace SansThreatLevel;
+namespace haydenk\SansThreatLevel;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
-class SansThreatLevel
+class Sans
 {
     /**
      * @var ClientInterface
@@ -29,7 +29,7 @@ class SansThreatLevel
 
     /**
      * @param ClientInterface $client
-     * @return SansThreatLevel
+     * @return Sans
      */
     public function setClient(ClientInterface $client)
     {
